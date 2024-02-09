@@ -16,7 +16,7 @@ export interface BlockStatement extends Statement {
 
 export interface IfStatement extends Statement {
     type: "IfStatement";
-    condition: Expression;
+    condition: ComparisonOperation;
     body: BlockStatement;
     else?: IfStatement | BlockStatement;
 }

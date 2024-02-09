@@ -5,6 +5,7 @@ import type {
     AssignmentOperation,
     BinaryExpression,
     BlockStatement,
+    ComparisonOperation,
     Expression,
     Identifier,
     IfStatement,
@@ -69,9 +70,12 @@ export class Parser {
         if (this.peek().type !== TokenType.OpenParen) {
             throw new SyntaxError("Ожидалось (");
         }
-        const condition = this.parseParenthesized();
+        const condition = this.parseParenthesized() as ComparisonOperation;
         if (this.peek().type !== TokenType.OpenCurly) {
             throw new SyntaxError("Ожидалось {");
+        }
+        if (condition.type !== "ComparisonOperation") {
+            throw new Error("Неверное сравнение в блоке ЕСЛИ - ИНАЧЕ");
         }
 
         const body = this.parseCodeBlock();

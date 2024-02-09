@@ -20,6 +20,10 @@ export class Runtime {
 
     private evalStatement(node: AST.ASTNode) {
         switch (node.type) {
+            case "IfStatement":
+                return this.evalIfStatement(node as AST.IfStatement);
+            case "BlockStatement":
+                return this.evalCodeBlock(node as AST.BlockStatement);
             case "VarDeclaration":
                 return this.evalVarDeclaration(node as AST.VarDeclaration);
             case "PrintStatement":
@@ -28,6 +32,23 @@ export class Runtime {
                 return this.evalReturnStatement(node as AST.ReturnStatement);
             default:
                 return this.evalExpression(node);
+        }
+    }
+
+    private evalIfStatement(node: AST.IfStatement) {
+        if (this.evalComparison(node.condition) === "истина") {
+            this.evalCodeBlock(node.body);
+        } else if (node.else?.type === "BlockStatement") {
+            this.evalCodeBlock(node.else);
+        } else if (node.else?.type === "IfStatement") {
+            this.evalIfStatement(node.else);
+        }
+    }
+
+    private evalCodeBlock(node: AST.BlockStatement) {
+        for (const stmt of node.body) {
+            this.evalStatement(stmt);
+            if (this.globalReturnFlag) break;
         }
     }
 
