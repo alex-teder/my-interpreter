@@ -182,7 +182,7 @@ export class Parser {
     private parseMultiplicative(): Expression {
         return this.parseBinaryOperation(
             "MathOperation",
-            ["*", "/"],
+            ["*", "/", "%"],
             this.parsePrimary.bind(this)
         );
     }

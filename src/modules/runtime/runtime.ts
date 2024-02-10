@@ -130,6 +130,8 @@ export class Runtime {
                 return leftValue * rightValue;
             case "/":
                 return leftValue / rightValue;
+            case "%":
+                return leftValue % rightValue;
             default:
                 throw new EvalError(
                     `Неизвестный математический оператор: ${operator}`

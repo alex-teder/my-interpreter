@@ -12,6 +12,7 @@ export const tokenDictionary: Record<string, TokenType> = {
     "-": TokenType.Math,
     "*": TokenType.Math,
     "/": TokenType.Math,
+    "%": TokenType.Math,
     "=": TokenType.Assignment,
     "==": TokenType.Comparison,
     "===": TokenType.Comparison,
