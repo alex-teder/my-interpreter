@@ -48,7 +48,7 @@ export class Lexer {
             }
 
             const stringLiteral = this.findStringLiteral();
-            if (stringLiteral) {
+            if (stringLiteral !== null) {
                 tokens.push(new Token(TokenType.StringLiteral, stringLiteral));
                 continue;
             }
@@ -96,9 +96,10 @@ export class Lexer {
         return result;
     }
 
-    private findStringLiteral(): string {
-        let result = "";
+    private findStringLiteral(): string | null {
+        let result = null;
         if (this.sourceCode[this.idx] === '"') {
+            result = "";
             this.idx++;
             while (this.sourceCode[this.idx] !== '"') {
                 if (
